@@ -70,16 +70,25 @@ export function fetchMessage() {
       });
   }
 }
+// { headers: { location :location, language: language}}
 
-export function fetchGithubMessage(){
-  return function(dispatch){
-    axios.get(ROOT_URL + '/github/test')
-      .then(response => {
-        console.log("response", response);
-        dispatch({
-          type: GITHUB,
-          payload: response.data.message
+
+export function fetchGithubMessage({location, language}){
+
+return function(dispatch){
+   console.log("in actions");
+    // return function(dispatch){
+      console.log("insite here");
+      axios.get(ROOT_URL + '/github/test',
+      { headers: { location :location, language: language}}
+
+    ).then(response => {
+          console.log("response", response);
+          dispatch({
+            type: GITHUB,
+            payload: response.data.message
+          });
         });
-      });
+
    }
 }

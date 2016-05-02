@@ -1,26 +1,22 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
+
 import * as actions from '../actions';
 
 class GitHub extends Component {
-  // componentWillMount() {
-  //   //     console.log("componentWillMount", this.props);
-  //   // // this.props.fetchGithubMessage();
-  // }
 
-  clickButtonSearch(){
-    this.props.fetchGithubMessage();
+  handleFormSubmit({ language, location}){
+    console.log("this.props", this.props);
+    console.log(language, location);
+    this.props.fetchGithubMessage({language, location});
   }
 
-  // renderMessage(){
-  //   if(this.props.user){
-  //     return this.props.user
-  //   } else {
-  //     return null
-  //   }
-  // }
-  //       // {this.renderMessage()}
+
+  clickButtonSearch(){
+    // this.props.fetchGithubMessage();
+  }
 
   renderUserList(){
     if(this.props.users){
@@ -37,11 +33,24 @@ class GitHub extends Component {
   }
 
   render() {
-    console.log('props in render', this.props);
+    const { handleSubmit , fields :{ language, location }} = this.props;
+
     return (
       <div>
-        <h5> Click this button </h5>
-        <button onClick={this.clickButtonSearch.bind(this)}>Click Me </button>
+
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <fieldset className="form-group">
+          <label> language: </label>
+          <input { ...language } className="form-control" />
+        </fieldset>
+
+        <fieldset className="form-group">
+          <label> Location: </label>
+          <input { ...location } className="form-control" />
+        </fieldset>
+        <button action="submit" className="btn btn-primary">Sign in </button>
+
+        </form>
           <ol>
             {this.renderUserList()}
           </ol>
@@ -56,4 +65,7 @@ function mapStateToProps(state) {
 
 
 
-export default connect(mapStateToProps, actions)(GitHub);
+export default reduxForm({
+  form: 'search',
+  fields: ['language', 'location']
+}, mapStateToProps, actions)(GitHub);
