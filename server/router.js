@@ -24,9 +24,10 @@ module.exports = function(app){
     // });
 
     app.get('/github/test', function(req, res){
-      const apiTest = axios.get('https://api.github.com/search/users?q=+repos:%3E42+language:javascript+location:leeds')
+      const language = req.headers.language;
+      const location = req.headers.location;
+      const apiTest = axios.get('https://api.github.com/search/users?q=+repos:%3E42+language:'+language+'+location:'+location)
         .then(response =>{
-          console.log("response", response.data.items[0].login);
           res.send({ message : response.data.items})
         })
     })
