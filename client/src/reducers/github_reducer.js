@@ -5,7 +5,7 @@ import {
 export default function(state = {}, action){
   switch(action.type){
       case GITHUB:
-    return { ...state, user: action.payload };
+    return { ...state, users: action.payload };
   }
 
   return state;

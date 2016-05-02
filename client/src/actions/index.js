@@ -73,10 +73,9 @@ export function fetchMessage() {
 
 export function fetchGithubMessage(){
   return function(dispatch){
-    axios.get(ROOT_URL + '/github', {
-      headers: { authorization: localStorage.getItem('token') }
-    })
+    axios.get(ROOT_URL + '/github/test')
       .then(response => {
+        console.log("response", response);
         dispatch({
           type: GITHUB,
           payload: response.data.message

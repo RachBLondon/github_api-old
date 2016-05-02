@@ -13,15 +13,28 @@ class GitHub extends Component {
     this.props.fetchGithubMessage();
   }
 
-  renderMessage(){
-    if(this.props.user){
-      return this.props.user
+  // renderMessage(){
+  //   if(this.props.user){
+  //     return this.props.user
+  //   } else {
+  //     return null
+  //   }
+  // }
+  //       // {this.renderMessage()}
+
+  renderUserList(){
+    if(this.props.users){
+      const answers = [];
+      this.props.users.map(user=>{
+        console.log("user try", user);
+        answers.push(<li>{user.login}</li>)
+      })
+      console.log('answers', answers);
+      return answers;
     } else {
       return null
     }
   }
-
-
 
   render() {
     console.log('props in render', this.props);
@@ -29,14 +42,16 @@ class GitHub extends Component {
       <div>
         <h5> Click this button </h5>
         <button onClick={this.clickButtonSearch.bind(this)}>Click Me </button>
-        {this.renderMessage()}
+          <ol>
+            {this.renderUserList()}
+          </ol>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { user: state.github.user };
+  return { users: state.github.users };
 }
 
 
