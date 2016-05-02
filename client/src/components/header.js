@@ -8,6 +8,7 @@ class Header extends Component {
       return (
         <li className="nav-item">
           <Link className="nav-link" to="/signout"> Sign Out </Link>
+          <Link className="nav-link" to="/Github"> Github </Link>
         </li>
       )
     } else {
@@ -27,7 +28,7 @@ class Header extends Component {
       <nav className="navbar navbar-light">
         <Link to="/" className="navbar-brand"> Redux Auth </Link>
         <ul className="nav navbar-nav">
-        
+
             {this.linkHeader()}
 
         </ul>

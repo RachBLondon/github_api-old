@@ -3,7 +3,8 @@ import { browserHistory } from 'react-router';
 import { AUTH_USER,
         AUTH_ERROR,
         UNAUTH_USER,
-        FETCH_MESSAGE
+        FETCH_MESSAGE,
+        GITHUB
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -68,4 +69,18 @@ export function fetchMessage() {
         });
       });
   }
+}
+
+export function fetchGithubMessage(){
+  return function(dispatch){
+    axios.get(ROOT_URL + '/github', {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        dispatch({
+          type: GITHUB,
+          payload: response.data.message
+        });
+      });
+   }
 }
