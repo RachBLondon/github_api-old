@@ -3,7 +3,8 @@ import { browserHistory } from 'react-router';
 import { AUTH_USER,
         AUTH_ERROR,
         UNAUTH_USER,
-        FETCH_MESSAGE
+        FETCH_MESSAGE,
+        GITHUB
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -68,4 +69,26 @@ export function fetchMessage() {
         });
       });
   }
+}
+// { headers: { location :location, language: language}}
+
+
+export function fetchGithubMessage({location, language}){
+
+return function(dispatch){
+   console.log("in actions");
+    // return function(dispatch){
+      console.log("insite here");
+      axios.get(ROOT_URL + '/github/test',
+      { headers: { location :location, language: language}}
+
+    ).then(response => {
+          console.log("response", response);
+          dispatch({
+            type: GITHUB,
+            payload: response.data.message
+          });
+        });
+
+   }
 }

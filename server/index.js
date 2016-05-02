@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:auth/auth')
 
 
 // App Setup
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 //any request will be parsed as json
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*'}));

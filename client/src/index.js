@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import reduxThunk from 'redux-thunk';
 import RequireAuth from './components/auth/RequireAuth';
 
@@ -12,6 +12,7 @@ import Signout from './components/auth/Signout';
 import Signup from './components/auth/Signup';
 import Feature from './components/Feature';
 import Welcome from './components/Welcome';
+import GitHub from './components/GitHub';
 
 import rootReducer from './reducers';
 import DevTools from './components/DevTools'
@@ -41,6 +42,7 @@ export default function configureStore(initialState){
           <Route path="signout" component={Signout}/>
           <Route path="signup" component={Signup}/>
           <Route path="feature" component={RequireAuth(Feature)} />
+          <Route path="github" component={GitHub} />
         </Route>
       </Router>
     </Provider>
