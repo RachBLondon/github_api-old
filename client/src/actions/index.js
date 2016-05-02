@@ -70,17 +70,13 @@ export function fetchMessage() {
       });
   }
 }
-// { headers: { location :location, language: language}}
 
 
 export function fetchGithubMessage({location, language}){
 
 return function(dispatch){
-   console.log("in actions");
-    // return function(dispatch){
-      console.log("insite here");
       axios.get(ROOT_URL + '/github/test',
-      { headers: { location :location, language: language}}
+      { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
 
     ).then(response => {
           console.log("response", response);
@@ -89,6 +85,5 @@ return function(dispatch){
             payload: response.data.message
           });
         });
-
    }
 }

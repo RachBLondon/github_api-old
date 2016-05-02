@@ -42,7 +42,7 @@ export default function configureStore(initialState){
           <Route path="signout" component={Signout}/>
           <Route path="signup" component={Signup}/>
           <Route path="feature" component={RequireAuth(Feature)} />
-          <Route path="github" component={GitHub} />
+          <Route path="github" component={RequireAuth(GitHub)} />
         </Route>
       </Router>
     </Provider>

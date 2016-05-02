@@ -14,15 +14,6 @@ module.exports = function(app){
       res.send({ message: 'super secret code'});
     });
 
-    // app.get('/github', function(req, res){
-    //   const apiTest = axios.get('https://api.github.com/search/users?q=+repos:%3E42+language:javascript+location:leeds')
-    //     .then(response =>{
-    //       console.log("response", response.data.items[0].login);
-    //       res.send({ message : response.data.items[0].login})
-    //     })
-    //
-    // });
-
     app.get('/github/test', function(req, res){
       const language = req.headers.language;
       const location = req.headers.location;
