@@ -9,8 +9,6 @@ import * as actions from '../../actions';
 class GitHub extends Component {
 
   handleFormSubmit({ language, location}){
-    console.log("this.props", this.props);
-    console.log(language, location);
     this.props.fetchGithubMessage({language, location});
   }
 
@@ -19,7 +17,7 @@ class GitHub extends Component {
     if(this.props.users){
       const answers = [];
       this.props.users.map(user=>{
-        answers.push(<User user={user.login}/>)
+        answers.push(<User key={user.login} user={user.login}/>)
       });
       return answers
     } else {

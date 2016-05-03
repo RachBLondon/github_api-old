@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import reduxThunk from 'redux-thunk';
 import RequireAuth from './components/auth/RequireAuth';
+import { AUTH_USER } from './actions/types';
 
 import App from './components/app';
 import Signin from './components/auth/Signin';
@@ -31,6 +32,11 @@ export default function configureStore(initialState){
   }
 
   const store = configureStore({});
+  const token = localStorage.getItem('token');
+
+  if(token){
+    store.dispatch({ type: AUTH_USER });
+  }
 
 
   ReactDOM.render(

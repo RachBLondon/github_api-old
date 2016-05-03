@@ -79,7 +79,6 @@ return function(dispatch){
       { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
 
     ).then(response => {
-          console.log("response", response);
           dispatch({
             type: GITHUB,
             payload: response.data.message
