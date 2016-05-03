@@ -7,7 +7,6 @@ class Signin extends Component {
 
 
   handleFormSubmit({ email, password}){
-    console.log(email, password);
     this.props.signinUser({email, password});
   }
 
@@ -22,8 +21,6 @@ class Signin extends Component {
   }
 
   render(){
-    console.log("this state", this.state);
-    console.log("props", this.props);
     const { handleSubmit , fields :{ email, password }} = this.props;
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
