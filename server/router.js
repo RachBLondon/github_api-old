@@ -20,8 +20,18 @@ module.exports = function(app){
       const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
           res.send({ message : response.data.items})
-        })
-    })
+        });
+    });
+
+    app.get('/github/userdata', function(req, res){
+      const user_name = req.headers.username;
+      const apiUserdata = axios.get('https://api.github.com/users/'+ user_name)
+        .then(repsonse => {
+          console.log('response', response);
+          res.send({ message : response.data.items})
+        });
+    });
+
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup',Authentication.signup);
 }

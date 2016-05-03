@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
+import * as actions from '../../actions'
+import { connect } from 'react-redux';
 
-export default class User extends Component {
+class User extends Component {
 
 componentWillMount(){
-  console.log('test', this.props.user);
+  this.props.fetchUserData(this.props.user)
+
 }
 
   render(){
     return(<div> {this.props.user}</div>);
   }
 }
+
+
+export default connect(null, actions)(User)

@@ -71,18 +71,30 @@ export function fetchMessage() {
   }
 }
 
-
+//TODO rename this function
 export function fetchGithubMessage({location, language}){
+  return function(dispatch){
+        axios.get(ROOT_URL + '/github/test',
+        { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
 
-return function(dispatch){
-      axios.get(ROOT_URL + '/github/test',
-      { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
-
-    ).then(response => {
-          dispatch({
-            type: GITHUB,
-            payload: response.data.message
+      ).then(response => {
+            dispatch({
+              type: GITHUB,
+              payload: response.data.message
+            });
           });
-        });
-   }
+     }
+}
+
+export function fetchUserData(username){
+  return function(dispatch){
+    axios.get(ROOT_URL + "/github/userdata",
+  { headers: { authorization: localStorage.getItem('token'), username: username}}
+    ).then(repsonse =>{
+      dispatch({
+        type: SHOW_USER_DATA,
+        payload : repsonse.data.message
+      });
+    });
+  }
 }
