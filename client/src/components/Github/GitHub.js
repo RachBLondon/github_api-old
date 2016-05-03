@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import * as actions from '../actions';
+import User from './User';
+import * as actions from '../../actions';
 
 class GitHub extends Component {
 
@@ -14,21 +15,15 @@ class GitHub extends Component {
   }
 
 
-  clickButtonSearch(){
-    // this.props.fetchGithubMessage();
-  }
-
-  renderUserList(){
+  renderUsers(){
     if(this.props.users){
       const answers = [];
       this.props.users.map(user=>{
-        console.log("user try", user);
-        answers.push(<li>{user.login}</li>)
-      })
-      console.log('answers', answers);
-      return answers;
+        answers.push(<User user={user.login}/>)
+      });
+      return answers
     } else {
-      return null
+      return null;
     }
   }
 
@@ -49,11 +44,8 @@ class GitHub extends Component {
           <input { ...location } className="form-control" />
         </fieldset>
         <button action="submit" className="btn btn-primary">Sign in </button>
-
         </form>
-          <ol>
-            {this.renderUserList()}
-          </ol>
+          {this.renderUsers()}
       </div>
     );
   }
