@@ -4,7 +4,8 @@ import { AUTH_USER,
         AUTH_ERROR,
         UNAUTH_USER,
         FETCH_MESSAGE,
-        GITHUB
+        GITHUB,
+        SHOW_USER_DATA
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -71,18 +72,31 @@ export function fetchMessage() {
   }
 }
 
-
+//TODO rename this function
 export function fetchGithubMessage({location, language}){
+  return function(dispatch){
+        axios.get(ROOT_URL + '/github/test',
+        { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
 
-return function(dispatch){
-      axios.get(ROOT_URL + '/github/test',
-      { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
-
-    ).then(response => {
-          dispatch({
-            type: GITHUB,
-            payload: response.data.message
+      ).then(response => {
+            dispatch({
+              type: GITHUB,
+              payload: response.data.message
+            });
           });
+     }
+}
+
+export function fetchUserData(username){
+  return function(dispatch){
+    axios.get(ROOT_URL + "/github/userdata",
+  { headers: { authorization: localStorage.getItem('token'), username: username}}
+  ).then(response =>{
+        console.log("RESPonse in fen", response.data.message);
+        dispatch({
+          type: SHOW_USER_DATA,
+          payload : response.data.message
         });
-   }
+      });
+  }
 }

@@ -3,6 +3,7 @@ const passportService = require('./services/passport');
 const passport        = require('passport');
 const Github          = require('./controllers/github')
 const axios           = require('axios');
+const env2            = require('env2')('./config.env');
 
 
 const requireAuth = passport.authenticate('jwt',{ session: false });
@@ -20,8 +21,20 @@ module.exports = function(app){
       const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
           res.send({ message : response.data.items})
-        })
-    })
+        });
+    });
+
+    app.get('/github/userdata', function(req, res){
+      const user_name = req.headers.username;
+      const apiUserdata = axios.get('https://api.github.com/users/'+ user_name +'?access_token='+ process.env.Github_AT)
+        .then(response => {
+          console.log("user_name", user_name);
+          res.send({ user_name : response.data})
+        }).catch( response => {
+          console.log("error", response);
+        });
+    });
+
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup',Authentication.signup);
 }
