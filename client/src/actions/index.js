@@ -4,7 +4,8 @@ import { AUTH_USER,
         AUTH_ERROR,
         UNAUTH_USER,
         FETCH_MESSAGE,
-        GITHUB
+        GITHUB,
+        SHOW_USER_DATA
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -90,11 +91,12 @@ export function fetchUserData(username){
   return function(dispatch){
     axios.get(ROOT_URL + "/github/userdata",
   { headers: { authorization: localStorage.getItem('token'), username: username}}
-    ).then(repsonse =>{
-      dispatch({
-        type: SHOW_USER_DATA,
-        payload : repsonse.data.message
+  ).then(response =>{
+        console.log("RESPonse in fen", response.data.message);
+        dispatch({
+          type: SHOW_USER_DATA,
+          payload : response.data.message
+        });
       });
-    });
   }
 }

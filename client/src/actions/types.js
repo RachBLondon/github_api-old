@@ -5,3 +5,4 @@ export const FETCH_MESSAGE = 'fetch_message';
 
 export const GITHUB = 'github';
 export const GET_USER_DATA = 'get_user_data';
+export const SHOW_USER_DATA = 'show_user_data';
