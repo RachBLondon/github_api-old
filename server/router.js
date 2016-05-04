@@ -26,9 +26,9 @@ module.exports = function(app){
     app.get('/github/userdata', function(req, res){
       const user_name = req.headers.username;
       const apiUserdata = axios.get('https://api.github.com/users/'+ user_name)
-        .then(repsonse => {
-          console.log('response', response);
-          res.send({ message : response.data.items})
+        .then(response => {
+          console.log('response', response.data);
+          res.send({ message : response.data})
         });
     });
 
