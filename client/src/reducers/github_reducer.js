@@ -9,7 +9,7 @@ export default function(state = {}, action){
       case GITHUB:
     return { ...state, users: action.payload };
       case SHOW_USER_DATA:
-    return { ...state, [action.payload.user_name.id]: action.payload.user_name}
+    return { ...state, [action.payload.userData.id]: action.payload.userData}
   }
 
   return state;
