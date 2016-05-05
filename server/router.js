@@ -21,15 +21,16 @@ module.exports = function(app){
       const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
           res.send({ message : response.data.items})
+        }).catch( response => {
+          console.log("error", response);
         });
     });
 
     app.get('/github/userdata', function(req, res){
-      const user_name = req.headers.username;
-      const apiUserdata = axios.get('https://api.github.com/users/'+ user_name +'?access_token='+ process.env.Github_AT)
+      const userData = req.headers.username;
+      const apiUserdata = axios.get('https://api.github.com/users/'+ userData +'?access_token='+ process.env.Github_AT)
         .then(response => {
-          console.log("user_name", user_name);
-          res.send({ user_name : response.data})
+          res.send({ userData : response.data})
         }).catch( response => {
           console.log("error", response);
         });

@@ -92,10 +92,9 @@ export function fetchUserData(username){
     axios.get(ROOT_URL + "/github/userdata",
   { headers: { authorization: localStorage.getItem('token'), username: username}}
   ).then(response =>{
-        console.log("RESPonse in fen", response.data.message);
         dispatch({
           type: SHOW_USER_DATA,
-          payload : response.data.message
+          payload : response.data
         });
       });
   }
