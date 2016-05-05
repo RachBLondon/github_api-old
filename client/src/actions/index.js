@@ -4,7 +4,7 @@ import { AUTH_USER,
         AUTH_ERROR,
         UNAUTH_USER,
         FETCH_MESSAGE,
-        GITHUB,
+        SEARCH_GITHUB,
         SHOW_USER_DATA
         } from './types';
 
@@ -80,7 +80,7 @@ export function fetchGithubMessage({location, language}){
 
       ).then(response => {
             dispatch({
-              type: GITHUB,
+              type: SEARCH_GITHUB,
               payload: response.data.message
             });
           });
