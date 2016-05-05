@@ -28,7 +28,6 @@ module.exports = function(app){
       const user_name = req.headers.username;
       const apiUserdata = axios.get('https://api.github.com/users/'+ user_name +'?access_token='+ process.env.Github_AT)
         .then(response => {
-          console.log("user_name", user_name);
           res.send({ user_name : response.data})
         }).catch( response => {
           console.log("error", response);
