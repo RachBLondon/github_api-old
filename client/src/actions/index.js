@@ -77,14 +77,10 @@ export function fetchMessage() {
 export function fetchGithubMessage({location, language}){
   return function(dispatch){
         axios.get(ROOT_URL + '/github/test',
-        { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
-
-      ).then(response => {
-
-        //get manipulate usernames in to array
+        { headers: { authorization: localStorage.getItem('token'),location :location, language: language}
+      }).then(response => {
           const rawData = response.data.message
           rawData.map(function(user){
-            console.log('>>>', user.login);
             axios.get(ROOT_URL + "/github/userdata",
           { headers: { authorization: localStorage.getItem('token'), username: user.login}}
           ).then(response =>{
@@ -93,28 +89,7 @@ export function fetchGithubMessage({location, language}){
                   payload : response.data
                 });
               });
-          })
-          // const userNames = [];
-
-
-
-            // dispatch({
-            //   type: SEARCH_GITHUB,
-            //   payload: response.data.message
-            // });
           });
-     }
-}
-
-export function fetchUserData(username){
-  return function(dispatch){
-  //   axios.get(ROOT_URL + "/github/userdata",
-  // { headers: { authorization: localStorage.getItem('token'), username: username}}
-  // ).then(response =>{
-  //       dispatch({
-  //         type: SHOW_USER_DATA,
-  //         payload : response.data
-  //       });
-  //     });
-  }
+      });
+   }
 }

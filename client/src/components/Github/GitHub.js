@@ -12,7 +12,6 @@ class GitHub extends Component {
     this.props.fetchGithubMessage({language, location});
   }
 
-
   renderUsers(){
     if(this.props.users){
       const answers = [];
@@ -30,7 +29,6 @@ class GitHub extends Component {
 
     return (
       <div>
-
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <fieldset className="form-group">
           <label> language: </label>
@@ -51,7 +49,6 @@ class GitHub extends Component {
 
 function mapStateToProps(state) {
   return {
-    users: state.searchResults.users,
     usersDetails : state.usersDetails
   };
 }
