@@ -7,7 +7,7 @@ import userDetailReducer from './userdetail_reducer';
 const rootReducer = combineReducers({
   form,
   auth: authReducer,
-  userDetail : userDetailReducer,
+  usersDetails : userDetailReducer,
   searchResults :searchReducer
   });
 

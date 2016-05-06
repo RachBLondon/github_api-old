@@ -50,7 +50,10 @@ class GitHub extends Component {
 }
 
 function mapStateToProps(state) {
-  return { users: state.searchResults.users };
+  return {
+    users: state.searchResults.users,
+    usersDetails : state.usersDetails
+  };
 }
 
 
