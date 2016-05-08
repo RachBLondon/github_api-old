@@ -5,7 +5,8 @@ import { AUTH_USER,
         UNAUTH_USER,
         FETCH_MESSAGE,
         SEARCH_GITHUB,
-        SHOW_USER_DATA
+        SHOW_USER_DATA,
+        SET_LOCATION_LANG
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -76,6 +77,11 @@ export function fetchMessage() {
 //TODO rename this function
 export function fetchGithubMessage({location, language}){
   return function(dispatch){
+        dispatch({
+          type :SET_LOCATION_LANG,
+          location,
+          language
+        })
         axios.get(ROOT_URL + '/github/test',
         { headers: { authorization: localStorage.getItem('token'),location :location, language: language}
       }).then(response => {
