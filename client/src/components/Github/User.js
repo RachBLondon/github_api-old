@@ -2,17 +2,21 @@ import React, { Component } from 'react';
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
 
+
 class User extends Component {
 
-componentWillMount(){
-  this.props.fetchUserData(this.props.user)
-
-}
-
   render(){
-    return(<div> {this.props.user}</div>);
+      return(<div>
+
+
+        </div>);
+    }
+  }
+
+function mapStateToProps(state){
+  return {
+    usersDetails : state.usersDetails
   }
 }
 
-
-export default connect(null, actions)(User)
+export default connect(mapStateToProps, actions)(User)

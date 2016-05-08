@@ -4,8 +4,9 @@ import { AUTH_USER,
         AUTH_ERROR,
         UNAUTH_USER,
         FETCH_MESSAGE,
-        GITHUB,
-        SHOW_USER_DATA
+        SEARCH_GITHUB,
+        SHOW_USER_DATA,
+        SET_LOCATION_LANG
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -72,30 +73,29 @@ export function fetchMessage() {
   }
 }
 
+
 //TODO rename this function
 export function fetchGithubMessage({location, language}){
   return function(dispatch){
-        axios.get(ROOT_URL + '/github/test',
-        { headers: { authorization: localStorage.getItem('token'),location :location, language: language}}
-
-      ).then(response => {
-            dispatch({
-              type: GITHUB,
-              payload: response.data.message
-            });
-          });
-     }
-}
-
-export function fetchUserData(username){
-  return function(dispatch){
-    axios.get(ROOT_URL + "/github/userdata",
-  { headers: { authorization: localStorage.getItem('token'), username: username}}
-  ).then(response =>{
         dispatch({
-          type: SHOW_USER_DATA,
-          payload : response.data
-        });
+          type :SET_LOCATION_LANG,
+          location,
+          language
+        })
+        axios.get(ROOT_URL + '/github/test',
+        { headers: { authorization: localStorage.getItem('token'),location :location, language: language}
+      }).then(response => {
+          const rawData = response.data.message
+          rawData.map(function(user){
+            axios.get(ROOT_URL + "/github/userdata",
+          { headers: { authorization: localStorage.getItem('token'), username: user.login}}
+          ).then(response =>{
+                dispatch({
+                  type: SHOW_USER_DATA,
+                  payload : response.data
+                });
+              });
+          });
       });
-  }
+   }
 }
