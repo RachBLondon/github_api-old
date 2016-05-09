@@ -13,12 +13,15 @@ class GitHub extends Component {
   }
 
   renderUsers(){
-    if(this.props.users){
-      const answers = [];
-      this.props.users.map(user=>{
-        answers.push(<User key={user.login} user={user.login}/>)
-      });
-      return answers
+    if(this.props.usersDetails){
+      const userData = this.props.usersDetails
+      for (var key in userData) {
+        if (userData.hasOwnProperty(key)) {
+          console.log(userData[key].login);
+          console.log(userData[key].name);
+          console.log("followers",userData[key].followers);
+        }
+      }
     } else {
       return null;
     }
@@ -26,7 +29,7 @@ class GitHub extends Component {
 
   render() {
     const { handleSubmit , fields :{ language, location }} = this.props;
-
+    console.log("THIS PROPS", this.props.usersDetails);
     return (
       <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
