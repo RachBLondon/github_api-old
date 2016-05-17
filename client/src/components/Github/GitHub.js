@@ -28,32 +28,30 @@ class GitHub extends Component {
       let numberUsersData = Object.keys(this.props.usersDetails).length;
 
       if(numberUsersData >= numberUsersDisplayed){
-        console.log(">>>", numberUsersData, numberUsersDisplayed);
         numberUsersDisplayed++;
         return this.createJSX(this.props.usersDetails)
 
       }
-
-      //if numberUsesData is great than numberUsersDisplayed add jsx to array for display
     }
 
   }
 
   createJSX(usersData){
     const jsxArray = [];
+
     Object.keys(usersData).map(function(key) {
-      // return <div>Key: {key}, Value: {usersData[key]}</div>;
-      console.log("LLLLL", usersData[key].login);
-      console.log("length :", Object.keys(usersData).length);
-      console.log( "count :", numberUsersDisplayed);
-      jsxArray.push(<div className="col-md-6">
+      const followerWidth = usersData[key].followers +"px";
+      const followerStyle = { width : followerWidth, height : followerWidth}
+      console.log("follwer style", followerWidth);
+      jsxArray.push(<div key={usersData[key].login} className="col-md-4 user__card">
                       <h2>{usersData[key].login}</h2>
                       <p>{usersData[key].name}</p>
                       <p>{usersData[key].company}</p>
-                      <p>{usersData[key].email}</p>
-                    </div>)
+                      <div className="user__followers" style={followerStyle}></div>
+                      <p> follwers </p>
+                    </div>
+                )
     })
-    console.log("createJSX", jsxArray);
     return jsxArray
   }
 

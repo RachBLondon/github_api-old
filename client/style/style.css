@@ -1,3 +1,13 @@
 .error {
   color: red;
 }
+
+.user__card {
+  padding: 25px;
+}
+
+.user__followers {
+  background-color: aqua;
+  border-radius: 50%;
+
+}
