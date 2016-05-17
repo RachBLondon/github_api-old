@@ -6,30 +6,55 @@ import { reduxForm } from 'redux-form';
 import User from './User';
 import * as actions from '../../actions';
 
+
+let numberUsersDisplayed = 0;
+
 class GitHub extends Component {
 
   handleFormSubmit({ language, location}){
     this.props.fetchGithubMessage({language, location});
   }
 
-  renderUsers(){
-    if(this.props.usersDetails){
-      const userData = this.props.usersDetails
-      for (var key in userData) {
-        if (userData.hasOwnProperty(key)) {
-          console.log(userData[key].login);
-          console.log(userData[key].name);
-          console.log("followers",userData[key].followers);
-        }
+  //create function to display jsx in array
+
+  organiseUserData(){
+
+
+    //check to see if there is anydata
+    if(this.props.usersDetails ){
+
+
+      //record rendered data recieved
+      let numberUsersData = Object.keys(this.props.usersDetails).length;
+
+      if(numberUsersData >= numberUsersDisplayed){
+        console.log(">>>", numberUsersData, numberUsersDisplayed);
+        numberUsersDisplayed++;
+        return this.createJSX(this.props.usersDetails)
+
       }
-    } else {
-      return null;
+
+      //if numberUsesData is great than numberUsersDisplayed add jsx to array for display
     }
+
+  }
+
+  createJSX(usersData){
+    const jsxArray = [];
+    Object.keys(usersData).map(function(key) {
+      // return <div>Key: {key}, Value: {usersData[key]}</div>;
+      console.log("LLLLL", usersData[key].login);
+      console.log("length :", Object.keys(usersData).length);
+      console.log( "count :", numberUsersDisplayed);
+      jsxArray.push(<div>{usersData[key].login}</div>)
+    })
+    console.log("createJSX", jsxArray);
+    return jsxArray
   }
 
   render() {
     const { handleSubmit , fields :{ language, location }} = this.props;
-    console.log("THIS PROPS", this.props.usersDetails);
+
     return (
       <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -44,7 +69,9 @@ class GitHub extends Component {
         </fieldset>
         <button action="submit" className="btn btn-primary">Sign in </button>
         </form>
-          {this.renderUsers()}
+        <div className="row">
+            {this.organiseUserData()}
+        </div>
       </div>
     );
   }
