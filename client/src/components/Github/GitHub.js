@@ -47,7 +47,9 @@ class GitHub extends Component {
                       <h2>{usersData[key].login}</h2>
                       <p>{usersData[key].name}</p>
                       <p>{usersData[key].company}</p>
-                      <div className="user__followers" style={followerStyle}></div>
+                      <div className="user__followers" style={followerStyle}>
+                        <p>{usersData[key].followers}</p>
+                      </div>
                       <p> follwers </p>
                     </div>
                 )
