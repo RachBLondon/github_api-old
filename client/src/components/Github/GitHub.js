@@ -46,7 +46,12 @@ class GitHub extends Component {
       console.log("LLLLL", usersData[key].login);
       console.log("length :", Object.keys(usersData).length);
       console.log( "count :", numberUsersDisplayed);
-      jsxArray.push(<div>{usersData[key].login}</div>)
+      jsxArray.push(<div className="col-md-6">
+                      <h2>{usersData[key].login}</h2>
+                      <p>{usersData[key].name}</p>
+                      <p>{usersData[key].company}</p>
+                      <p>{usersData[key].email}</p>
+                    </div>)
     })
     console.log("createJSX", jsxArray);
     return jsxArray

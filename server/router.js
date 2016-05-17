@@ -20,6 +20,7 @@ module.exports = function(app){
       const location = req.headers.location;
       const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
+          console.log(response.data.items);
           res.send({ message : response.data.items})
         }).catch( response => {
           console.log("error", response);
