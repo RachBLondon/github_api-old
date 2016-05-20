@@ -20,8 +20,23 @@ module.exports = function(app){
       const location = req.headers.location;
       const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          console.log(response.data.items);
-          res.send({ message : response.data.items})
+          // console.log(response.data.items);
+          const users = [];
+          response.data.items.map(function(userObj){
+            // console.log("user obj in map", userObj);
+            // console.log(">>>>>", userObj.login);
+            const apiUserdata = axios.get('https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT)
+              .then(function (response, userObj){
+                  // res.send({ userData : response.data})
+                  users.push(response.data)
+
+                  console.log("users >>>", userObj);
+
+              });
+
+          });
+
+          // res.send({ message : response.data.items})
         }).catch( response => {
           console.log("error", response);
         });
