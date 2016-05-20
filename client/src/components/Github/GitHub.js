@@ -6,30 +6,60 @@ import { reduxForm } from 'redux-form';
 import User from './User';
 import * as actions from '../../actions';
 
+
+let numberUsersDisplayed = 0;
+
 class GitHub extends Component {
 
   handleFormSubmit({ language, location}){
     this.props.fetchGithubMessage({language, location});
   }
 
-  renderUsers(){
-    if(this.props.usersDetails){
-      const userData = this.props.usersDetails
-      for (var key in userData) {
-        if (userData.hasOwnProperty(key)) {
-          console.log(userData[key].login);
-          console.log(userData[key].name);
-          console.log("followers",userData[key].followers);
-        }
+  //create function to display jsx in array
+
+  organiseUserData(){
+
+
+    //check to see if there is anydata
+    if(this.props.usersDetails ){
+
+
+      //record rendered data recieved
+      let numberUsersData = Object.keys(this.props.usersDetails).length;
+
+      if(numberUsersData >= numberUsersDisplayed){
+        numberUsersDisplayed++;
+        return this.createJSX(this.props.usersDetails)
+
       }
-    } else {
-      return null;
     }
+
+  }
+
+  createJSX(usersData){
+    const jsxArray = [];
+
+    Object.keys(usersData).map(function(key) {
+      const followerWidth = usersData[key].followers +"px";
+      const followerStyle = { width : followerWidth, height : followerWidth}
+      console.log("follwer style", followerWidth);
+      jsxArray.push(<div key={usersData[key].login} className="col-md-4 user__card">
+                      <h2>{usersData[key].login}</h2>
+                      <p>{usersData[key].name}</p>
+                      <p>{usersData[key].company}</p>
+                      <div className="user__followers" style={followerStyle}>
+                        <p>{usersData[key].followers}</p>
+                      </div>
+                      <p> follwers </p>
+                    </div>
+                )
+    })
+    return jsxArray
   }
 
   render() {
     const { handleSubmit , fields :{ language, location }} = this.props;
-    console.log("THIS PROPS", this.props.usersDetails);
+
     return (
       <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -44,7 +74,9 @@ class GitHub extends Component {
         </fieldset>
         <button action="submit" className="btn btn-primary">Sign in </button>
         </form>
-          {this.renderUsers()}
+        <div className="row">
+            {this.organiseUserData()}
+        </div>
       </div>
     );
   }
