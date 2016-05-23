@@ -4,10 +4,15 @@ const passport        = require('passport');
 const Github          = require('./controllers/github')
 const axios           = require('axios');
 const env2            = require('env2')('./config.env');
+const async           = require('async');
+
+const request = require('request');
 
 
 const requireAuth = passport.authenticate('jwt',{ session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+
+var testRes;
 
 
 module.exports = function(app){
@@ -15,27 +20,35 @@ module.exports = function(app){
       res.send({ message: 'super secret code'});
     });
 
+
+
+    const apiDeets = function(userObj, callback){
+
+      const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
+      axios.get(getUrl)
+        .then(response =>{
+          callback(null, detailUserArray.push(response.data))
+        });
+     }
+
+    const done = function(error, result) {
+      testRes.send({ userData : detailUserArray })
+    }
+
+
+
     app.get('/github/test', function(req, res){
       const language = req.headers.language;
       const location = req.headers.location;
-      const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
+      detailUserArray = [];
+      testRes = res
+      axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          console.log(response.data.items);
-          res.send({ message : response.data.items})
-        }).catch( response => {
-          console.log("error", response);
+          const detailUserArray = []
+          async.map(response.data.items, apiDeets, done );
         });
     });
 
-    app.get('/github/userdata', function(req, res){
-      const userData = req.headers.username;
-      const apiUserdata = axios.get('https://api.github.com/users/'+ userData +'?access_token='+ process.env.Github_AT)
-        .then(response => {
-          res.send({ userData : response.data})
-        }).catch( response => {
-          console.log("error", response);
-        });
-    });
 
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup',Authentication.signup);
