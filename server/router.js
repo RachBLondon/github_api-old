@@ -4,53 +4,49 @@ const passport        = require('passport');
 const Github          = require('./controllers/github')
 const axios           = require('axios');
 const env2            = require('env2')('./config.env');
+const async           = require('async');
+
+const request = require('request');
 
 
 const requireAuth = passport.authenticate('jwt',{ session: false });
 const requireSignin = passport.authenticate('local', { session: false });
+const detailArray = []
 
+const detailUserArray = []
 
 module.exports = function(app){
     app.get('/', requireAuth, function(req, res){
       res.send({ message: 'super secret code'});
     });
 
+
+    const apiDeets = function(userObj, callback){
+      console.log("in apiDeets");
+      const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
+      axios.get(getUrl)
+        .then(response =>{
+          callback(null, detailUserArray.push(response.data))
+        });
+     }
+
+    const done = function(error, result) {
+      console.log("map completed. Error: ", error, ">>>>>>>>>>>", detailUserArray);
+    }
+
+
+
     app.get('/github/test', function(req, res){
       const language = req.headers.language;
       const location = req.headers.location;
-      const apiTest = axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
+      const users = [];
+      axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          // console.log(response.data.items);
-          const users = [];
-          response.data.items.map(function(userObj){
-            // console.log("user obj in map", userObj);
-            // console.log(">>>>>", userObj.login);
-            const apiUserdata = axios.get('https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT)
-              .then(function (response, userObj){
-                  // res.send({ userData : response.data})
-                  users.push(response.data)
-
-                  console.log("users >>>", userObj);
-
-              });
-
-          });
-
-          // res.send({ message : response.data.items})
-        }).catch( response => {
-          console.log("error", response);
+          async.map(response.data.items, apiDeets, done);
+          console.log(detailUserArray);
         });
     });
 
-    app.get('/github/userdata', function(req, res){
-      const userData = req.headers.username;
-      const apiUserdata = axios.get('https://api.github.com/users/'+ userData +'?access_token='+ process.env.Github_AT)
-        .then(response => {
-          res.send({ userData : response.data})
-        }).catch( response => {
-          console.log("error", response);
-        });
-    });
 
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup',Authentication.signup);
