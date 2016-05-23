@@ -8,7 +8,7 @@ export default function(state = {}, action){
       case SET_LOCATION_LANG:
   return null;
       case SHOW_USER_DATA:
-    return { ...state, [action.payload.userData.login]: action.payload.userData}
+    return { ...state, usersDetails : action.payload}
   }
   return state;
 }
