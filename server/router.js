@@ -11,8 +11,8 @@ const request = require('request');
 
 const requireAuth = passport.authenticate('jwt',{ session: false });
 const requireSignin = passport.authenticate('local', { session: false });
-const detailArray = []
 
+var testRes;
 const detailUserArray = []
 
 module.exports = function(app){
@@ -22,7 +22,6 @@ module.exports = function(app){
 
 
     const apiDeets = function(userObj, callback){
-      console.log("in apiDeets");
       const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
       axios.get(getUrl)
         .then(response =>{
@@ -31,7 +30,9 @@ module.exports = function(app){
      }
 
     const done = function(error, result) {
-      console.log("map completed. Error: ", error, ">>>>>>>>>>>", detailUserArray);
+      console.log("done this", testRes);
+      console.log(">>>>>>>>>>>", detailUserArray);
+      testRes.send({ userData : detailUserArray })
     }
 
 
@@ -39,11 +40,12 @@ module.exports = function(app){
     app.get('/github/test', function(req, res){
       const language = req.headers.language;
       const location = req.headers.location;
-      const users = [];
+
+      testRes = res
+      console.log("in /githuh/test", testRes);
       axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          async.map(response.data.items, apiDeets, done);
-          console.log(detailUserArray);
+          async.map(response.data.items, apiDeets, done );
         });
     });
 
