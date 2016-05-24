@@ -9,60 +9,38 @@ import * as actions from '../../actions';
 
 let numberUsersDisplayed = 0;
 
+const colorScheme =['#ffffff', '#998a7b','#d7e6ef', '#bfced3', '#aca497']
+
 class GitHub extends Component {
 
   handleFormSubmit({ language, location}){
     this.props.fetchGithubMessage({language, location});
   }
 
-  //create function to display jsx in array
 
-  // organiseUserData(){
-  //
-  //
-  //   //check to see if there is anydata
-  //   if(this.props.usersDetails ){
-  //
-  //
-  //     //record rendered data recieved
-  //     let numberUsersData = Object.keys(this.props.usersDetails).length;
-  //
-  //     if(numberUsersData >= numberUsersDisplayed){
-  //       numberUsersDisplayed++;
-  //       return this.createJSX(this.props.usersDetails)
-  //
-  //     }
-  //   }
-  //
-  // }
-  //
-  // createJSX(usersData){
-  //   const jsxArray = [];
-  //
-  //   Object.keys(usersData).map(function(key) {
-  //     const followerWidth = usersData[key].followers +"px";
-  //     const followerStyle = { width : followerWidth, height : followerWidth}
-  //     console.log("follwer style", followerWidth);
-  //     jsxArray.push(<div key={usersData[key].login} className="col-md-4 user__card">
-  //                     <h2>{usersData[key].login}</h2>
-  //                     <p>{usersData[key].name}</p>
-  //                     <p>{usersData[key].company}</p>
-  //                     <div className="user__followers" style={followerStyle}>
-  //                       <p>{usersData[key].followers}</p>
-  //                     </div>
-  //                     <p> follwers </p>
-  //                   </div>
-  //               )
-  //   })
-  //   return jsxArray
-  // }
   showUsers(){
-    console.log("length :", this.props.usersDetails.length);
-    if (this.props.usersDetails.length> 0){
-      this.props.usersDetails.map(user =>{
-        console.log(user.login, user.id);
-      })
-    }
+   let count = 0;
+   return this.props.usersDetails.map(user =>{
+      const userName = user.name ? user.name : user.login;
+      const hireSatus = user.hireable? "fa fa-check-circle": null;
+      const textColor = count%5 === 1 || count%5 === 4 ? '#ffffff' : '#998a7b';
+      const divStyle = {backgroundColor : colorScheme[count%5], color : textColor}
+      count ++;
+        return (
+          <div key={count} className="col-md-4  c-user_cell" style={divStyle}>
+            <div className="row">
+              <div className="col-xs-6">
+                <h4>{userName}</h4>
+                <p>{user.location}</p>
+                <i className={hireSatus}></i>
+              </div>
+              <div className="col-xs-6">
+                <p>Follwers : {user.follwers}</p>
+                <p>Repos : {user.public_repos}</p>
+              </div>
+            </div>
+          </div>)
+      });
   }
 
   render() {

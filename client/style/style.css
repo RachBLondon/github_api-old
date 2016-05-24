@@ -1,12 +1,4 @@
-.error {
-  color: red;
-}
-
-.user__card {
-  padding: 25px;
-}
-
-.user__followers {
-  background-color: aqua;
-  border-radius: 50%;
-}
+.c-user_cell {
+  padding: 5%;
+  height: 200px;
+  }
