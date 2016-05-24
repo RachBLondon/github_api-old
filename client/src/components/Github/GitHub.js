@@ -17,44 +17,52 @@ class GitHub extends Component {
 
   //create function to display jsx in array
 
-  organiseUserData(){
-
-
-    //check to see if there is anydata
-    if(this.props.usersDetails ){
-
-
-      //record rendered data recieved
-      let numberUsersData = Object.keys(this.props.usersDetails).length;
-
-      if(numberUsersData >= numberUsersDisplayed){
-        numberUsersDisplayed++;
-        return this.createJSX(this.props.usersDetails)
-
-      }
+  // organiseUserData(){
+  //
+  //
+  //   //check to see if there is anydata
+  //   if(this.props.usersDetails ){
+  //
+  //
+  //     //record rendered data recieved
+  //     let numberUsersData = Object.keys(this.props.usersDetails).length;
+  //
+  //     if(numberUsersData >= numberUsersDisplayed){
+  //       numberUsersDisplayed++;
+  //       return this.createJSX(this.props.usersDetails)
+  //
+  //     }
+  //   }
+  //
+  // }
+  //
+  // createJSX(usersData){
+  //   const jsxArray = [];
+  //
+  //   Object.keys(usersData).map(function(key) {
+  //     const followerWidth = usersData[key].followers +"px";
+  //     const followerStyle = { width : followerWidth, height : followerWidth}
+  //     console.log("follwer style", followerWidth);
+  //     jsxArray.push(<div key={usersData[key].login} className="col-md-4 user__card">
+  //                     <h2>{usersData[key].login}</h2>
+  //                     <p>{usersData[key].name}</p>
+  //                     <p>{usersData[key].company}</p>
+  //                     <div className="user__followers" style={followerStyle}>
+  //                       <p>{usersData[key].followers}</p>
+  //                     </div>
+  //                     <p> follwers </p>
+  //                   </div>
+  //               )
+  //   })
+  //   return jsxArray
+  // }
+  showUsers(){
+    console.log("length :", this.props.usersDetails.length);
+    if (this.props.usersDetails.length> 0){
+      this.props.usersDetails.map(user =>{
+        console.log(user.login, user.id);
+      })
     }
-
-  }
-
-  createJSX(usersData){
-    const jsxArray = [];
-
-    Object.keys(usersData).map(function(key) {
-      const followerWidth = usersData[key].followers +"px";
-      const followerStyle = { width : followerWidth, height : followerWidth}
-      console.log("follwer style", followerWidth);
-      jsxArray.push(<div key={usersData[key].login} className="col-md-4 user__card">
-                      <h2>{usersData[key].login}</h2>
-                      <p>{usersData[key].name}</p>
-                      <p>{usersData[key].company}</p>
-                      <div className="user__followers" style={followerStyle}>
-                        <p>{usersData[key].followers}</p>
-                      </div>
-                      <p> follwers </p>
-                    </div>
-                )
-    })
-    return jsxArray
   }
 
   render() {
@@ -75,7 +83,7 @@ class GitHub extends Component {
         <button action="submit" className="btn btn-primary">Sign in </button>
         </form>
         <div className="row">
-            {this.organiseUserData()}
+            {this.showUsers()}
         </div>
       </div>
     );
