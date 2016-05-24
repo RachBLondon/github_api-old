@@ -32,7 +32,8 @@ module.exports = function(app){
      }
 
     const done = function(error, result) {
-      testRes.send({ userData : detailUserArray })
+      console.log("user detailUserArray", detailUserArray);
+      testRes.send(detailUserArray)
     }
 
 
