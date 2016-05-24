@@ -25,11 +25,14 @@ class GitHub extends Component {
       const hireSatus = user.hireable? "fa fa-check-circle": null;
       const textColor = count%5 === 1 || count%5 === 4 ? '#ffffff' : '#998a7b';
       const divStyle = {backgroundColor : colorScheme[count%5], color : textColor}
+
+
       count ++;
         return (
           <div key={count} className="col-md-4  c-user_cell" style={divStyle}>
             <div className="row">
               <div className="col-xs-6">
+                <img src={user.avatar_url} className="c-user_cell__img" />
                 <h4>{userName}</h4>
                 <p>{user.location}</p>
                 <i className={hireSatus}></i>
