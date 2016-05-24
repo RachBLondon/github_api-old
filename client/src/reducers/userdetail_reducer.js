@@ -2,13 +2,11 @@ import { SHOW_USER_DATA,
         SET_LOCATION_LANG
       } from '../actions/types';
 
-export default function(state = {}, action){
-      // console.log("action" ,action.payload);
+export default function(state = [], action){
   switch(action.type){
-      case SET_LOCATION_LANG:
-  return null;
       case SHOW_USER_DATA:
-    return { ...state, usersDetails : action.payload}
+      console.log("in reducer", action.payload);
+    return Object.assign([], state,  action.payload)
   }
   return state;
 }

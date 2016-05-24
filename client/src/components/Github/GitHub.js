@@ -57,17 +57,12 @@ class GitHub extends Component {
   //   return jsxArray
   // }
   showUsers(){
-    if(this.props.usersDetails){
-      const userArr = this.props.usersDetails.userData
-      console.log("ZzzzZzZZZZZ", userArr);
-      userArr.map(function(user){
-        console.log("user", user);
+    console.log("length :", this.props.usersDetails.length);
+    if (this.props.usersDetails.length> 0){
+      this.props.usersDetails.map(user =>{
+        console.log(user.login, user.id);
       })
-
-    console.log("LLL", this.props.usersDetails);
-    }else {
-      return null;
-      }
+    }
   }
 
   render() {
@@ -97,7 +92,7 @@ class GitHub extends Component {
 
 function mapStateToProps(state) {
   return {
-    usersDetails : state.usersDetails.usersDetails
+    usersDetails : state.usersDetails
   };
 }
 
