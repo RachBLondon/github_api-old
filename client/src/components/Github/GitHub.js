@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import User from './User';
+import UserCard from './UserCard';
 import * as actions from '../../actions';
 
 
@@ -22,29 +22,26 @@ class GitHub extends Component {
    let count = 0;
    return this.props.usersDetails.map(user =>{
       const userName = user.name ? user.name : user.login;
-      const hireSatus = user.hireable? "fa fa-check-circle": "fa fa-times";
+      const hireStatus = user.hireable? "fa fa-check-circle": "fa fa-times";
       const textColor = count%5 === 1 || count%5 === 4 ? '#ffffff' : '#998a7b';
       const divStyle = {backgroundColor : colorScheme[count%5], color : textColor}
-
-
       count ++;
+      
         return (
-          <div key={count} className="col-md-4  c-user_cell" style={divStyle}>
-            <div className="row">
-              <div className="col-xs-6">
-                <img src={user.avatar_url} className="c-user_cell__img" />
-                <h4>{userName}</h4>
-                <p>{user.location}</p>
-                <p>Hireable: <i className={hireSatus}></i> </p>
-              </div>
-              <div className="col-xs-6">
-                <p>Follwers : {user.followers}</p>
-                <p>Repos : {user.public_repos}</p>
-              </div>
-            </div>
-          </div>)
-      });
-  }
+                  <UserCard
+                    key={count}
+                    userName={userName}
+                    hireStatus={hireStatus}
+                    textColor={textColor}
+                    divStyle={divStyle}
+                    avatar={user.avatar_url}
+                    location={user.location}
+                    followers={user.followers}
+                    repos={user.public_repos}
+                  />
+                )
+          });
+      }
 
   render() {
     const { handleSubmit , fields :{ language, location }} = this.props;
