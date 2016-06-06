@@ -22,7 +22,7 @@ class GitHub extends Component {
    let count = 0;
    return this.props.usersDetails.map(user =>{
       const userName = user.name ? user.name : user.login;
-      const hireSatus = user.hireable? "fa fa-check-circle": null;
+      const hireSatus = user.hireable? "fa fa-check-circle": "fa fa-times";
       const textColor = count%5 === 1 || count%5 === 4 ? '#ffffff' : '#998a7b';
       const divStyle = {backgroundColor : colorScheme[count%5], color : textColor}
 
@@ -35,10 +35,10 @@ class GitHub extends Component {
                 <img src={user.avatar_url} className="c-user_cell__img" />
                 <h4>{userName}</h4>
                 <p>{user.location}</p>
-                <i className={hireSatus}></i>
+                <p>Hireable: <i className={hireSatus}></i> </p>
               </div>
               <div className="col-xs-6">
-                <p>Follwers : {user.follwers}</p>
+                <p>Follwers : {user.followers}</p>
                 <p>Repos : {user.public_repos}</p>
               </div>
             </div>

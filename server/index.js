@@ -17,6 +17,8 @@ mongoose.connect('mongodb://localhost:auth/auth')
 // App Setup
 // app.use(morgan('combined'));
 //any request will be parsed as json
+
+//TODO ADD Stormpath auth here
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*'}));
 router(app);
