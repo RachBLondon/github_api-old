@@ -33,7 +33,6 @@ module.exports = function(app){
      }
 
     const done = function(error, result) {
-      console.log("KKK", detailUserArray[0]);
       testRes.send(detailUserArray)
     }
 
@@ -47,8 +46,9 @@ module.exports = function(app){
       console.log('https://api.github.com/search/users?q=+language:'+language+'+location:'+location);
       axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          console.log(">>>>>>",response.headers.link);
-          const pagination = response.headers.link
+          console.log(response.headers.link.split(','));
+
+          const pagination = {links: response.headers.link.split(',')}
           // const detailUserArray = []
           detailUserArray.push(pagination)
           async.map(response.data.items, apiDeets, done );

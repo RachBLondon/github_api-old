@@ -5,6 +5,7 @@ import { SHOW_USER_DATA,
 export default function(state = [], action){
   switch(action.type){
       case SHOW_USER_DATA:
+      console.log(action);
     return Object.assign([], state,  action.payload)
   }
   return state;

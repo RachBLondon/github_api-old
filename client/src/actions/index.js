@@ -88,6 +88,7 @@ export function fetchGithubMessage({location, language}){
           console.log("response in action", response);
           dispatch({
              type: SHOW_USER_DATA,
+             pagination : response.data.shift(),
              payload : response.data
            });
       });
