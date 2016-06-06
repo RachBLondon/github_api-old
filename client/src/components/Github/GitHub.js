@@ -1,10 +1,13 @@
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { reduxForm } from 'redux-form'
 
-import UserCard from './UserCard';
-import * as actions from '../../actions';
+import * as actions from '../../actions'
+
+import UserCard from './UserCard'
+import Pager from '../nav/pager'
+
 
 
 let numberUsersDisplayed = 0;
@@ -17,6 +20,10 @@ class GitHub extends Component {
     this.props.fetchGithubMessage({language, location});
   }
 
+  pagingation(){
+    console.log("usersDetails length", this.props.usersDetails.length);
+    return this.props.usersDetails.length === 30 ? <Pager /> : null;
+  }
 
   showUsers(){
    let count = 0;
@@ -26,7 +33,7 @@ class GitHub extends Component {
       const textColor = count%5 === 1 || count%5 === 4 ? '#ffffff' : '#998a7b';
       const divStyle = {backgroundColor : colorScheme[count%5], color : textColor}
       count ++;
-      
+
         return (
                   <UserCard
                     key={count}
@@ -60,9 +67,11 @@ class GitHub extends Component {
         </fieldset>
         <button action="submit" className="btn btn-primary">Sign in </button>
         </form>
+          {this.pagingation()}
         <div className="row">
             {this.showUsers()}
         </div>
+          {this.pagingation()}
       </div>
     );
   }
