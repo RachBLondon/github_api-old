@@ -21,7 +21,6 @@ class GitHub extends Component {
   }
 
   pagingation(){
-    console.log("usersDetails length", this.props.usersDetails.length);
     return this.props.usersDetails.length === 30 ? <Pager /> : null;
   }
 
