@@ -85,9 +85,10 @@ export function fetchGithubMessage({location, language}){
         axios.get(ROOT_URL + '/github/test',
         { headers: { authorization: localStorage.getItem('token'),location :location, language: language}
       }).then(response => {
-
+          console.log("response in action", response);
           dispatch({
              type: SHOW_USER_DATA,
+             pagination : response.data.shift(),
              payload : response.data
            });
       });

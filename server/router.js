@@ -15,6 +15,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 var testRes;
 
 
+
 module.exports = function(app){
     app.get('/', requireAuth, function(req, res){
       res.send({ message: 'super secret code'});
@@ -32,7 +33,6 @@ module.exports = function(app){
      }
 
     const done = function(error, result) {
-      console.log("user detailUserArray", detailUserArray);
       testRes.send(detailUserArray)
     }
 
@@ -43,9 +43,14 @@ module.exports = function(app){
       const location = req.headers.location;
       detailUserArray = [];
       testRes = res
+      console.log('https://api.github.com/search/users?q=+language:'+language+'+location:'+location);
       axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          const detailUserArray = []
+          console.log(response.headers.link.split(','));
+
+          const pagination = {links: response.headers.link.split(',')}
+          // const detailUserArray = []
+          detailUserArray.push(pagination)
           async.map(response.data.items, apiDeets, done );
         });
     });

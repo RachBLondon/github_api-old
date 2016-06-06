@@ -1,13 +1,18 @@
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { reduxForm } from 'redux-form'
 
-import User from './User';
-import * as actions from '../../actions';
+import * as actions from '../../actions'
+
+import UserCard from './UserCard'
+import Pager from '../nav/pager'
+
 
 
 let numberUsersDisplayed = 0;
+
+const colorScheme =['#ffffff', '#998a7b','#d7e6ef', '#bfced3', '#aca497']
 
 class GitHub extends Component {
 
@@ -15,55 +20,34 @@ class GitHub extends Component {
     this.props.fetchGithubMessage({language, location});
   }
 
-  //create function to display jsx in array
-
-  // organiseUserData(){
-  //
-  //
-  //   //check to see if there is anydata
-  //   if(this.props.usersDetails ){
-  //
-  //
-  //     //record rendered data recieved
-  //     let numberUsersData = Object.keys(this.props.usersDetails).length;
-  //
-  //     if(numberUsersData >= numberUsersDisplayed){
-  //       numberUsersDisplayed++;
-  //       return this.createJSX(this.props.usersDetails)
-  //
-  //     }
-  //   }
-  //
-  // }
-  //
-  // createJSX(usersData){
-  //   const jsxArray = [];
-  //
-  //   Object.keys(usersData).map(function(key) {
-  //     const followerWidth = usersData[key].followers +"px";
-  //     const followerStyle = { width : followerWidth, height : followerWidth}
-  //     console.log("follwer style", followerWidth);
-  //     jsxArray.push(<div key={usersData[key].login} className="col-md-4 user__card">
-  //                     <h2>{usersData[key].login}</h2>
-  //                     <p>{usersData[key].name}</p>
-  //                     <p>{usersData[key].company}</p>
-  //                     <div className="user__followers" style={followerStyle}>
-  //                       <p>{usersData[key].followers}</p>
-  //                     </div>
-  //                     <p> follwers </p>
-  //                   </div>
-  //               )
-  //   })
-  //   return jsxArray
-  // }
-  showUsers(){
-    console.log("length :", this.props.usersDetails.length);
-    if (this.props.usersDetails.length> 0){
-      this.props.usersDetails.map(user =>{
-        console.log(user.login, user.id);
-      })
-    }
+  pagingation(){
+    return this.props.usersDetails.length === 30 ? <Pager /> : null;
   }
+
+  showUsers(){
+   let count = 0;
+   return this.props.usersDetails.map(user =>{
+      const userName = user.name ? user.name : user.login;
+      const hireStatus = user.hireable? "fa fa-check-circle": "fa fa-times";
+      const textColor = count%5 === 1 || count%5 === 4 ? '#ffffff' : '#998a7b';
+      const divStyle = {backgroundColor : colorScheme[count%5], color : textColor}
+      count ++;
+
+        return (
+                  <UserCard
+                    key={count}
+                    userName={userName}
+                    hireStatus={hireStatus}
+                    textColor={textColor}
+                    divStyle={divStyle}
+                    avatar={user.avatar_url}
+                    location={user.location}
+                    followers={user.followers}
+                    repos={user.public_repos}
+                  />
+                )
+          });
+      }
 
   render() {
     const { handleSubmit , fields :{ language, location }} = this.props;
@@ -82,9 +66,11 @@ class GitHub extends Component {
         </fieldset>
         <button action="submit" className="btn btn-primary">Sign in </button>
         </form>
+          {this.pagingation()}
         <div className="row">
             {this.showUsers()}
         </div>
+          {this.pagingation()}
       </div>
     );
   }

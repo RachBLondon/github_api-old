@@ -1,12 +1,31 @@
-.error {
-  color: red;
-}
+.c-user_cell {
+  padding: 2%;
+  padding-left: 4%;
+  height: 231px;
+  }
 
-.user__card {
-  padding: 25px;
-}
-
-.user__followers {
-  background-color: aqua;
+.c-user_cell__img {
+  height: 70px;
   border-radius: 50%;
+  -webkit-filter: grayscale(1);
+ filter: grayscale(1);
+ opacity: 0.76
+}
+
+.pager {
+  display: inline;
+}
+
+.c-pager li{
+  display: inline;
+  color: #998a7b;
+  padding: 15px;
+}
+
+.c-pager .next {
+  float: right;
+}
+.c-pager .previous {
+  float: left;
+  margin-left: -40px;
 }
