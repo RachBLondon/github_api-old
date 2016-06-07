@@ -46,10 +46,23 @@ module.exports = function(app){
       console.log('https://api.github.com/search/users?q=+language:'+language+'+location:'+location);
       axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
         .then(response =>{
-          console.log(response.headers.link.split(','));
-
-          const pagination = {links: response.headers.link.split(',')}
-          // const detailUserArray = []
+          const pages ={}
+          const splitFirstBracket = response.headers.link.split("<");
+          splitFirstBracket.map(function(rawData, i){
+            if(i === 1){
+              pages.next = rawData.split('>')[0]
+            } else if( i===2 ){
+              pages.last = rawData.split('>')[0]
+            } else if( i=== 3){
+              pages.first = rawData.split('>')[0]
+            } else if (1===4){
+              pages.prev = rawData.split('>')[0]
+            } else {
+              return null
+            }
+          })
+          
+          const pagination = {links: pages}
           detailUserArray.push(pagination)
           async.map(response.data.items, apiDeets, done );
         });

@@ -78,7 +78,8 @@ class GitHub extends Component {
 
 function mapStateToProps(state) {
   return {
-    usersDetails : state.usersDetails
+    usersDetails : state.usersDetails,
+    pagination   : state.langLoc.pagination
   };
 }
 
