@@ -21,7 +21,7 @@ class GitHub extends Component {
   }
 
   pagingation(){
-    return this.props.usersDetails.length === 30 ? <Pager /> : null;
+    return this.props.usersDetails.length === 30 ? <Pager next={this.props.pagination.links.next} last={this.props.pagination.links.last}/> : null;
   }
 
   showUsers(){
@@ -50,6 +50,7 @@ class GitHub extends Component {
       }
 
   render() {
+
     const { handleSubmit , fields :{ language, location }} = this.props;
 
     return (
