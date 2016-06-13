@@ -94,3 +94,11 @@ export function fetchGithubMessage({location, language}){
       });
    }
 }
+
+export function fetchPagination(url){
+  console.log("in fetchPagination", url);
+  axios.get(ROOT_URL + '/github/pagination',{headers: {url: url}}
+    ).then(response =>{
+    console.log("response to pagination ", response);
+  })
+}

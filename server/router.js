@@ -15,12 +15,10 @@ const requireSignin = passport.authenticate('local', { session: false });
 var testRes;
 
 
-
 module.exports = function(app){
     app.get('/', requireAuth, function(req, res){
       res.send({ message: 'super secret code'});
     });
-
 
 
     const apiDeets = function(userObj, callback){
@@ -36,6 +34,14 @@ module.exports = function(app){
       testRes.send(detailUserArray)
     }
 
+    app.get('/github/pagination', function(req, res){
+      const url = req.headers.url;
+      axios.get(url)
+        .then(response =>{
+          console.log("line 40 :", response);
+
+        })
+    })
 
 
     app.get('/github/test', function(req, res){
@@ -43,12 +49,11 @@ module.exports = function(app){
       const location = req.headers.location;
       detailUserArray = [];
       testRes = res
-      console.log('https://api.github.com/search/users?q=+language:'+language+'+location:'+location);
-      axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
+      axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
           const pages ={}
-          const splitFirstBracket = response.headers.link.split("<");
-          splitFirstBracket.map(function(rawData, i){
+          const rawPages = response.headers.link.split("<");
+          rawPages.map(function(rawData, i){
             if(i === 1){
               pages.next = rawData.split('>')[0]
             } else if( i===2 ){
@@ -61,7 +66,7 @@ module.exports = function(app){
               return null
             }
           })
-          
+
           const pagination = {links: pages}
           detailUserArray.push(pagination)
           async.map(response.data.items, apiDeets, done );

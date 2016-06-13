@@ -21,7 +21,7 @@ class GitHub extends Component {
   }
 
   pagingation(){
-    return this.props.usersDetails.length === 30 ? <Pager next={this.props.pagination.links.next} last={this.props.pagination.links.last}/> : null;
+    return this.props.usersDetails.length === 30 ? <Pager pagination={actions.fetchPagination} paginationCall={actions.fetchPagination} next={this.props.pagination.links.next} last={this.props.pagination.links.last}/> : null;
   }
 
   showUsers(){

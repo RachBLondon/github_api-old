@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import * as actions from '../../actions'
 import { connect } from 'react-redux';
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 
 
 class Pager extends Component {
+  handleNextClick(){
+    this.props.paginationCall(this.props.next)
+  }
 
   render(){
     console.log("Pager props : ", this.props);
@@ -12,8 +15,8 @@ class Pager extends Component {
         <div className="col-md-12">
           <nav>
             <ul className="c-pager">
-              <li className="previous"><Link to="#">Previous</Link></li>
-              <li className="next"><Link to="#">Next</Link></li>
+              <li className="previous">Previous</li>
+              <li onClick={this.handleNextClick.bind(this)} className="next">Next</li>
             </ul>
           </nav>
         </div>);
