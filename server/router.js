@@ -20,9 +20,28 @@ module.exports = function(app){
       res.send({ message: 'super secret code'});
     });
 
+    const pagingationURLs = function(response){
+      const pages ={}
+      const rawPages = response.headers.link.split("<");
+      rawPages.map(function(rawData, i){
+        if(i === 1){
+          pages.next = rawData.split('>')[0]
+        } else if( i===2 ){
+          pages.last = rawData.split('>')[0]
+        } else if( i=== 3){
+          pages.first = rawData.split('>')[0]
+        } else if (1===4){
+          pages.prev = rawData.split('>')[0]
+        } else {
+          return null
+        }
+      })
+      const pagination = {links: pages}
+      detailUserArray.push(pagination)
+    }
 
     const apiDeets = function(userObj, callback){
-
+      console.log(userObj);
       const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
       axios.get(getUrl)
         .then(response =>{
@@ -36,10 +55,12 @@ module.exports = function(app){
 
     app.get('/github/pagination', function(req, res){
       const url = req.headers.url;
+      detailUserArray = [];
+      testRes = res
       axios.get(url)
         .then(response =>{
-          console.log("line 40 :", response);
-
+          pagingationURLs(response)
+          async.map(response.data.items, apiDeets, done );
         })
     })
 
@@ -51,24 +72,7 @@ module.exports = function(app){
       testRes = res
       axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
-          const pages ={}
-          const rawPages = response.headers.link.split("<");
-          rawPages.map(function(rawData, i){
-            if(i === 1){
-              pages.next = rawData.split('>')[0]
-            } else if( i===2 ){
-              pages.last = rawData.split('>')[0]
-            } else if( i=== 3){
-              pages.first = rawData.split('>')[0]
-            } else if (1===4){
-              pages.prev = rawData.split('>')[0]
-            } else {
-              return null
-            }
-          })
-
-          const pagination = {links: pages}
-          detailUserArray.push(pagination)
+          pagingationURLs(response)
           async.map(response.data.items, apiDeets, done );
         });
     });

@@ -85,20 +85,29 @@ export function fetchGithubMessage({location, language}){
         axios.get(ROOT_URL + '/github/test',
         { headers: { authorization: localStorage.getItem('token'),location :location, language: language}
       }).then(response => {
-          console.log("response in action", response);
           dispatch({
              type: SHOW_USER_DATA,
              pagination : response.data.shift(),
              payload : response.data
            });
+      }).catch(function (response) {
+        console.log(response);
       });
    }
 }
 
 export function fetchPagination(url){
-  console.log("in fetchPagination", url);
-  axios.get(ROOT_URL + '/github/pagination',{headers: {url: url}}
-    ).then(response =>{
-    console.log("response to pagination ", response);
-  })
+  // return function(dispatch){
+    console.log("in fetchPagination");
+    axios.get(ROOT_URL + '/github/pagination',{headers: {url: url}
+      }).then(response => {
+        return {
+           type: SHOW_USER_DATA,
+           pagination : response.data.shift(),
+           payload : response.data
+         }
+       }).catch(function (response) {
+         console.log(response);
+    });
+  // }
 }

@@ -10,7 +10,7 @@ class Pager extends Component {
   }
 
   render(){
-    console.log("Pager props : ", this.props);
+
       return(
         <div className="col-md-12">
           <nav>
