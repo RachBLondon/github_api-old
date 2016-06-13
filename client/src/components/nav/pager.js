@@ -23,5 +23,7 @@ class Pager extends Component {
     }
   }
 
+  
+
 
 export default Pager;

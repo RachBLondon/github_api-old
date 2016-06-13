@@ -86,6 +86,8 @@ function mapStateToProps(state) {
 
 
 
+
+
 export default reduxForm({
   form: 'search',
   fields: ['language', 'location']
