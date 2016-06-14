@@ -10,9 +10,6 @@ export default function(state = {}, action){
   return {...state, location : action.location, language: action.language}
       case SHOW_USER_DATA:
   return {...state, pagination: action.pagination }
-  //   case PAGINATION_UP:
-  // return {...state, pagination: 'page up' }
-
-  }
+    }
   return state;
 }

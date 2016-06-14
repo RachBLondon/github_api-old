@@ -85,10 +85,19 @@ function mapStateToProps(state) {
 }
 
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+      fetchGithubMessage : ({language, location }) => {
+      dispatch(actions.fetchGithubMessage({language, location}) )
+    }
+  }
+}
+
+
 
 
 
 export default reduxForm({
   form: 'search',
   fields: ['language', 'location']
-}, mapStateToProps, actions)(GitHub);
+}, mapStateToProps, mapDispatchToProps)(GitHub);
