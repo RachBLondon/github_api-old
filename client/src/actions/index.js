@@ -97,9 +97,9 @@ export function fetchGithubMessage({location, language}){
    }
 }
 
-export function fetchPagination(dispatch){
-  return function(url){
-    console.log("in fetchPagination");
+export function fetchPagination(url){
+  return function(dispatch){
+    console.log("in fetchPagination :", url);
     axios.get(ROOT_URL + '/github/pagination',{headers: {url: url}
       }).then(response => {
         console.log(response);

@@ -21,7 +21,7 @@ class GitHub extends Component {
   }
 
   pagingation(){
-    return this.props.usersDetails.length === 30 ? <Pager pagination={actions.fetchPagination} paginationCall={actions.fetchPagination} next={this.props.pagination.links.next} last={this.props.pagination.links.last}/> : null;
+    return this.props.usersDetails.length === 30 ? <Pager pagination={actions.fetchPagination} paginationCall={this.props.fetchPagination} next={this.props.pagination.links.next} last={this.props.pagination.links.last}/> : null;
   }
 
   showUsers(){
@@ -89,7 +89,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
       fetchGithubMessage : ({language, location }) => {
       dispatch(actions.fetchGithubMessage({language, location}) )
+    },
+    fetchPagination : (url)=>{
+      dispatch(actions.fetchPagination(url))
     }
+
   }
 }
 
