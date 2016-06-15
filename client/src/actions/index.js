@@ -8,7 +8,7 @@ import { AUTH_USER,
         SHOW_USER_DATA,
         SET_LOCATION_LANG,
         PAGINATION_UP,
-        NEXT_PAGE
+        TURN_PAGE
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -103,6 +103,8 @@ export function fetchPagination(data){
     console.log("in fetchPagination :", data.url);
     if(data.type==='next'){
       dispatch({ type: NEXT_PAGE})
+    } else if(data.type === 'last'){
+      dispatch({ type: TURN_PAGE, page : data.page})
     }
     axios.get(ROOT_URL + '/github/pagination',{headers: {url: data.url}
       }).then(response => {
