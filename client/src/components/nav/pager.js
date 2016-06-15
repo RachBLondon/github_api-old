@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 class Pager extends Component {
   handleNextClick(){
-    this.props.paginationCall(this.props.next)
+    this.props.paginationCall({ type: 'next', url:this.props.next})
   }
 
   render(){
@@ -23,7 +23,7 @@ class Pager extends Component {
     }
   }
 
-  
+
 
 
 export default Pager;

@@ -7,7 +7,8 @@ import { AUTH_USER,
         SEARCH_GITHUB,
         SHOW_USER_DATA,
         SET_LOCATION_LANG,
-        PAGINATION_UP
+        PAGINATION_UP,
+        NEXT_PAGE
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -97,10 +98,13 @@ export function fetchGithubMessage({location, language}){
    }
 }
 
-export function fetchPagination(url){
+export function fetchPagination(data){
   return function(dispatch){
-    console.log("in fetchPagination :", url);
-    axios.get(ROOT_URL + '/github/pagination',{headers: {url: url}
+    console.log("in fetchPagination :", data.url);
+    if(data.type==='next'){
+      dispatch({ type: NEXT_PAGE})
+    }
+    axios.get(ROOT_URL + '/github/pagination',{headers: {url: data.url}
       }).then(response => {
         console.log(response);
         dispatch ({
