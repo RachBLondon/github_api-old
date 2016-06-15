@@ -1,5 +1,5 @@
 import {    NEXT_PAGE,
-  SET_LOCATION_LANG
+  SET_LOCATION_LANG, TURN_PAGE
       } from '../actions/types';
 
 export default function(state = 0, action){
@@ -8,6 +8,8 @@ export default function(state = 0, action){
   return  state = 1
       case NEXT_PAGE:
   return  state +1
+      case TURN_PAGE :
+  return action.page
     }
   return state;
 }

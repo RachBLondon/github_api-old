@@ -41,7 +41,6 @@ module.exports = function(app){
     }
 
     const apiDeets = function(userObj, callback){
-      console.log(userObj);
       const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
       axios.get(getUrl)
         .then(response =>{
@@ -50,6 +49,7 @@ module.exports = function(app){
      }
 
     const done = function(error, result) {
+      console.log(">>>>", detailUserArray);
       testRes.send(detailUserArray)
     }
 
