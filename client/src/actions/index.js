@@ -8,7 +8,8 @@ import { AUTH_USER,
         SHOW_USER_DATA,
         SET_LOCATION_LANG,
         PAGINATION_UP,
-        TURN_PAGE
+        TURN_PAGE,
+        SHOW_LAST_PAGE
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -87,11 +88,17 @@ export function fetchGithubMessage({location, language}){
         axios.get(ROOT_URL + '/github/test',
         { headers: { authorization: localStorage.getItem('token'),location :location, language: language}
       }).then(response => {
-          dispatch({
-             type: SHOW_USER_DATA,
-             pagination : response.data.shift(),
-             payload : response.data
-           });
+        const pagination = response.data.shift()
+        //TODO Write a test for this
+          const lastPage = pagination.links.last.split('page=')[1];
+          console.log("lastPage", lastPage);
+            dispatch({
+               type: SHOW_USER_DATA,
+               pagination : pagination,
+               payload : response.data,
+               lastPage : lastPage
+             });
+
       }).catch(function (response) {
         console.log(response);
       });
@@ -101,9 +108,7 @@ export function fetchGithubMessage({location, language}){
 export function fetchPagination(data){
   return function(dispatch){
     console.log("in fetchPagination :", data.url);
-    if(data.type==='next'){
-      dispatch({ type: NEXT_PAGE})
-    } else if(data.type === 'last'){
+    if(data.type){
       dispatch({ type: TURN_PAGE, page : data.page})
     }
     axios.get(ROOT_URL + '/github/pagination',{headers: {url: data.url}

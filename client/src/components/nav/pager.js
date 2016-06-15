@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 
 class Pager extends Component {
   handleNextClick(){
-    this.props.paginationCall({ type: 'next', url:this.props.next})
+    const page = this.props.next.split("page=")[1]
+    this.props.paginationCall({ type: 'next', url:this.props.next, page: page})
   }
 
   handleLastClick(){
