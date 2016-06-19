@@ -21,7 +21,7 @@ html {
    opacity: 0.76
 }
 
-.pager {
+/*.pager {
   display: inline;
 }
 
@@ -37,4 +37,4 @@ html {
 .c-pager .previous {
   float: left;
   margin-left: -40px;
-}
+}*/

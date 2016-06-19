@@ -107,10 +107,6 @@ export function fetchGithubMessage({location, language}){
 
 export function fetchPagination(data){
   return function(dispatch){
-    console.log("in fetchPagination :", data.url);
-    if(data.type){
-      dispatch({ type: TURN_PAGE, page : data.page})
-    }
     axios.get(ROOT_URL + '/github/pagination',{headers: {url: data.url}
       }).then(response => {
         console.log(response);
