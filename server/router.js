@@ -15,16 +15,36 @@ const requireSignin = passport.authenticate('local', { session: false });
 var testRes;
 
 
-
 module.exports = function(app){
     app.get('/', requireAuth, function(req, res){
       res.send({ message: 'super secret code'});
     });
 
+    const pagingationURLs = function(response){
+      const pages ={}
+      const rawPages = response.headers.link.split("<");
+      rawPages.map(function(rawData, i){
+        if(rawData.indexOf('next')>0){
+          pages.next = rawData.split('>')[0]
+        }
+         if(rawData.indexOf('last')>0){
+          pages.last = rawData.split('>')[0]
+        }
 
+        if(rawData.indexOf('prev')>0 ){
+         pages.prev = rawData.split('>')[0]
+       }
+
+       if(rawData.indexOf('first')>0){
+        pages.first = rawData.split('>')[0]
+      }
+
+      })
+      const pagination = {links: pages}
+      detailUserArray.push(pagination)
+    }
 
     const apiDeets = function(userObj, callback){
-
       const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
       axios.get(getUrl)
         .then(response =>{
@@ -36,6 +56,16 @@ module.exports = function(app){
       testRes.send(detailUserArray)
     }
 
+    app.get('/github/pagination', function(req, res){
+      const url = req.headers.url;
+      detailUserArray = [];
+      testRes = res
+      axios.get(url)
+        .then(response =>{
+          pagingationURLs(response)
+          async.map(response.data.items, apiDeets, done );
+        })
+    })
 
 
     app.get('/github/test', function(req, res){
@@ -43,14 +73,9 @@ module.exports = function(app){
       const location = req.headers.location;
       detailUserArray = [];
       testRes = res
-      console.log('https://api.github.com/search/users?q=+language:'+language+'+location:'+location);
-      axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location )
+      axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
-          console.log(response.headers.link.split(','));
-
-          const pagination = {links: response.headers.link.split(',')}
-          // const detailUserArray = []
-          detailUserArray.push(pagination)
+          pagingationURLs(response)
           async.map(response.data.items, apiDeets, done );
         });
     });

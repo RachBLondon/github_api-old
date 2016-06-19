@@ -15,7 +15,7 @@ import Feature from './components/Feature';
 import Welcome from './components/Welcome';
 import GitHub from './components/GitHub/GitHub';
 
-import rootReducer from './reducers';
+import rootReducer from './reducers'
 import DevTools from './components/DevTools'
 
 

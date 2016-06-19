@@ -21,7 +21,7 @@ class GitHub extends Component {
   }
 
   pagingation(){
-    return this.props.usersDetails.length === 30 ? <Pager /> : null;
+    return this.props.usersDetails.length === 30 ? <Pager pagination={actions.fetchPagination} paginationCall={this.props.fetchPagination} pages={this.props.pagination.links} /> : null;
   }
 
   showUsers(){
@@ -50,6 +50,7 @@ class GitHub extends Component {
       }
 
   render() {
+
     const { handleSubmit , fields :{ language, location }} = this.props;
 
     return (
@@ -78,13 +79,29 @@ class GitHub extends Component {
 
 function mapStateToProps(state) {
   return {
-    usersDetails : state.usersDetails
+    usersDetails : state.usersDetails,
+    pagination   : state.langLoc.pagination
   };
 }
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      fetchGithubMessage : ({language, location }) => {
+      dispatch(actions.fetchGithubMessage({language, location}) )
+    },
+    fetchPagination : (url)=>{
+      dispatch(actions.fetchPagination(url))
+    }
+
+  }
+}
+
+
 
 
 
 export default reduxForm({
   form: 'search',
   fields: ['language', 'location']
-}, mapStateToProps, actions)(GitHub);
+}, mapStateToProps, mapDispatchToProps)(GitHub);
