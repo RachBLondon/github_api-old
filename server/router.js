@@ -23,7 +23,6 @@ module.exports = function(app){
     const pagingationURLs = function(response){
       const pages ={}
       const rawPages = response.headers.link.split("<");
-      console.log(rawPages);
       rawPages.map(function(rawData, i){
         if(rawData.indexOf('next')>0){
           pages.next = rawData.split('>')[0]
@@ -33,7 +32,6 @@ module.exports = function(app){
         }
 
         if(rawData.indexOf('prev')>0 ){
-          console.log(rawData);
          pages.prev = rawData.split('>')[0]
        }
 

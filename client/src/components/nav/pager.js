@@ -32,7 +32,6 @@ class Pager extends Component {
   }
 
   render(){
-    console.log("IN PAGER :", this.props);
     const firstButton = this.props.pages.first ? (<li onClick={this.handleClickFirst.bind(this)}className="first">First</li>) : null
     const nextButton = this.props.pages.next ? (<li onClick={this.handleClickNext.bind(this)}className="next">Next</li>) : null
     const prevButton = this.props.pages.prev ? (<li onClick={this.handleClickPrev.bind(this)}className="prev">Prev</li>) : null
