@@ -23,18 +23,40 @@ module.exports = function(app){
     const pagingationURLs = function(response){
       const pages ={}
       const rawPages = response.headers.link.split("<");
+
       rawPages.map(function(rawData, i){
-        if(i === 1){
+        if(rawData.indexOf('next')>0){
           pages.next = rawData.split('>')[0]
-        } else if( i===2 ){
-          pages.last = rawData.split('>')[0]
-        } else if( i=== 3){
-          pages.first = rawData.split('>')[0]
-        } else if (1===4){
-          pages.prev = rawData.split('>')[0]
-        } else {
-          return null
         }
+         if(rawData.indexOf('last')>0){
+          pages.last = rawData.split('>')[0]
+        }
+
+        if(rawData.indexOf('prev')>0){
+         pages.prev = rawData.split('>')[0]
+       }
+
+       if(rawData.indexOf('first')>0){
+        pages.first = rawData.split('>')[0]
+      }
+
+
+
+        // if(rawData.indexOf('last')>0){
+        //   console.log("last",rawData);
+        //   pages.last = rawData.split('>')[0]
+        // }
+        // if(i === 1){
+        //   pages.next = rawData.split('>')[0]
+        // } else if( i===2 ){
+        //   pages.last = rawData.split('>')[0]
+        // } else if( i=== 3){
+        //   pages.first = rawData.split('>')[0]
+        // } else if (1===4){
+        //   pages.prev = rawData.split('>')[0]
+        // } else {
+        //   return null
+        // }
       })
       const pagination = {links: pages}
       detailUserArray.push(pagination)
@@ -49,7 +71,6 @@ module.exports = function(app){
      }
 
     const done = function(error, result) {
-      console.log(">>>>", detailUserArray);
       testRes.send(detailUserArray)
     }
 

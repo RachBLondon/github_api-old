@@ -15,6 +15,8 @@ class Pager extends Component {
     this.props.paginationCall({type: "last", url: this.props.last, page: page })
   }
 
+  
+
   render(){
     console.log("IN PAGER :", this.props);
       return(
