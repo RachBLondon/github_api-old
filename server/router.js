@@ -23,7 +23,7 @@ module.exports = function(app){
     const pagingationURLs = function(response){
       const pages ={}
       const rawPages = response.headers.link.split("<");
-
+      console.log(rawPages);
       rawPages.map(function(rawData, i){
         if(rawData.indexOf('next')>0){
           pages.next = rawData.split('>')[0]
@@ -32,7 +32,8 @@ module.exports = function(app){
           pages.last = rawData.split('>')[0]
         }
 
-        if(rawData.indexOf('prev')>0){
+        if(rawData.indexOf('prev')>0 ){
+          console.log(rawData);
          pages.prev = rawData.split('>')[0]
        }
 
@@ -40,23 +41,6 @@ module.exports = function(app){
         pages.first = rawData.split('>')[0]
       }
 
-
-
-        // if(rawData.indexOf('last')>0){
-        //   console.log("last",rawData);
-        //   pages.last = rawData.split('>')[0]
-        // }
-        // if(i === 1){
-        //   pages.next = rawData.split('>')[0]
-        // } else if( i===2 ){
-        //   pages.last = rawData.split('>')[0]
-        // } else if( i=== 3){
-        //   pages.first = rawData.split('>')[0]
-        // } else if (1===4){
-        //   pages.prev = rawData.split('>')[0]
-        // } else {
-        //   return null
-        // }
       })
       const pagination = {links: pages}
       detailUserArray.push(pagination)

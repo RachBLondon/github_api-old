@@ -1,7 +1,7 @@
 import {
         SET_LOCATION_LANG,
         SHOW_USER_DATA,
-        NEXT_PAGE
+        UPDATE_PAGE
       } from '../actions/types';
 
 export default function(state = {}, action){
@@ -11,6 +11,8 @@ export default function(state = {}, action){
   return {...state, location : action.location, language: action.language}
       case SHOW_USER_DATA:
   return {...state, pagination: action.pagination}
+      case UPDATE_PAGE:
+  return {...state, pageTurn : action.page}
     }
   return state;
 }

@@ -7,9 +7,7 @@ import { AUTH_USER,
         SEARCH_GITHUB,
         SHOW_USER_DATA,
         SET_LOCATION_LANG,
-        PAGINATION_UP,
-        TURN_PAGE,
-        SHOW_LAST_PAGE
+        UPDATE_PAGE
         } from './types';
 
 const ROOT_URL = 'http://localhost:3090';
@@ -107,6 +105,10 @@ export function fetchGithubMessage({location, language}){
 
 export function fetchPagination(data){
   return function(dispatch){
+    dispatch({
+      type: UPDATE_PAGE,
+      page : data.type
+    })
     axios.get(ROOT_URL + '/github/pagination',{headers: {url: data.url}
       }).then(response => {
         console.log(response);

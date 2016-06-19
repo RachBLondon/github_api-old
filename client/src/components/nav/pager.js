@@ -20,15 +20,15 @@ class Pager extends Component {
   }
 
   handleClickLast(){
-    this.props.paginationCall({ type: 'next', url:this.props.pages.last} )
+    this.props.paginationCall({ type: 'last', url:this.props.pages.last} )
   }
 
   handleClickFirst(){
-    this.props.paginationCall({ type: 'next', url:this.props.pages.first})
+    this.props.paginationCall({ type: 'fist', url:this.props.pages.first})
   }
 
   handleClickPrev(){
-    this.props.paginationCall({ type: 'next', url:this.props.pages.prev} )
+    this.props.paginationCall({ type: 'prev', url:this.props.pages.prev} )
   }
 
   render(){
@@ -36,7 +36,7 @@ class Pager extends Component {
     const firstButton = this.props.pages.first ? (<li onClick={this.handleClickFirst.bind(this)}className="first">First</li>) : null
     const nextButton = this.props.pages.next ? (<li onClick={this.handleClickNext.bind(this)}className="next">Next</li>) : null
     const prevButton = this.props.pages.prev ? (<li onClick={this.handleClickPrev.bind(this)}className="prev">Prev</li>) : null
-    const lastButton = this.props.pages.last ? (<li onClick={this.handleClickNext.bind(this)}className="last">Last</li>) : null
+    const lastButton = this.props.pages.last ? (<li onClick={this.handleClickLast.bind(this)}className="last">Last</li>) : null
 
 
       return(
