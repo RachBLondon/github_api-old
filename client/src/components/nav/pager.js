@@ -1,20 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import * as actions from '../../actions'
-import { connect } from 'react-redux';
-// import { Link } from 'react-router'
+import { connect } from 'react-redux'
 
 
 class Pager extends Component {
-  // handleNextClick(){
-  //   const page = this.props.next.split("page=")[1]
-  //   this.props.paginationCall({ type: 'next', url:this.props.next, page: page})
-  // }
-  //
-  // handleLastClick(){
-  //   const page = this.props.last.split("page=")[1]
-  //   this.props.paginationCall({type: "last", url: this.props.last, page: page })
-  // }
-
   handleClickNext(){
     this.props.paginationCall({ type: 'next', url:this.props.pages.next} )
   }
@@ -32,22 +21,24 @@ class Pager extends Component {
   }
 
   render(){
-    const firstButton = this.props.pages.first ? (<li onClick={this.handleClickFirst.bind(this)}className="first">First</li>) : null
-    const nextButton = this.props.pages.next ? (<li onClick={this.handleClickNext.bind(this)}className="next">Next</li>) : null
-    const prevButton = this.props.pages.prev ? (<li onClick={this.handleClickPrev.bind(this)}className="prev">Prev</li>) : null
-    const lastButton = this.props.pages.last ? (<li onClick={this.handleClickLast.bind(this)}className="last">Last</li>) : null
+    const firstButton = this.props.pages.first ? (<li onClick={this.handleClickFirst.bind(this)}className="first">First</li>) : <li className="first u-inactive">First</li>
+    const nextButton = this.props.pages.next ? (<li onClick={this.handleClickNext.bind(this)}className="next">Next</li>) : <li className="next u-inactive">Next</li>
+    const prevButton = this.props.pages.prev ? (<li onClick={this.handleClickPrev.bind(this)}className="prev">Prev</li>) : <li className="prev u-inactive">Prev</li>
+    const lastButton = this.props.pages.last ? (<li onClick={this.handleClickLast.bind(this)}className="last">Last</li>) : <li className="last u-inactive">Last</li>
 
 
       return(
         <div className="col-md-12">
-          <nav>
-            <ul className="c-pager">
-              {firstButton}
-              {prevButton}
-              {nextButton}
-              {lastButton}
-            </ul>
-          </nav>
+          <div className="container">
+            <nav>
+              <ul className="pager">
+                {firstButton}
+                {prevButton}
+                {nextButton}
+                {lastButton}
+              </ul>
+            </nav>
+          </div>
         </div>);
     }
   }
