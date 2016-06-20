@@ -20,21 +20,19 @@ html {
    filter: grayscale(1);
    opacity: 0.76
 }
-
-/*.pager {
-  display: inline;
+.pager {
+  margin: 10px;
+}
+.pager li {
+  padding: 1em;
+  margin: 1em;
+  border-radius: 30px;
+  background-color: #bfced3;
 }
 
-.c-pager li{
-  display: inline;
-  color: #998a7b;
-  padding: 15px;
+.pager li:hover {
+  background-color: #d7e6ef;
 }
-
-.c-pager .next {
-  float: right;
+.pager li:active {
+  background-color: #aca497;
 }
-.c-pager .previous {
-  float: left;
-  margin-left: -40px;
-}*/
