@@ -36,3 +36,7 @@ html {
 .pager li:active {
   background-color: #aca497;
 }
+
+.pager .u-inactive {
+  opacity: 0.3;
+}
