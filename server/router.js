@@ -1,7 +1,3 @@
-const Authentication  = require('./controllers/authentication');
-const passportService = require('./services/passport');
-const passport        = require('passport');
-const Github          = require('./controllers/github')
 const axios           = require('axios');
 const env2            = require('env2')('./config.env');
 const async           = require('async');
@@ -9,16 +5,11 @@ const async           = require('async');
 const request = require('request');
 
 
-const requireAuth = passport.authenticate('jwt',{ session: false });
-const requireSignin = passport.authenticate('local', { session: false });
 
 var testRes;
 
 
 module.exports = function(app){
-    app.get('/', requireAuth, function(req, res){
-      res.send({ message: 'super secret code'});
-    });
 
     const pagingationURLs = function(response){
       const pages ={}
@@ -80,7 +71,4 @@ module.exports = function(app){
         });
     });
 
-
-    app.post('/signin', requireSignin, Authentication.signin);
-    app.post('/signup',Authentication.signup);
 }
