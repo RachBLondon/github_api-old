@@ -44,7 +44,6 @@ module.exports = function(app){
      }
 
     const done = function(error, results) {
-        detailUserArray.concat(results);
         testRes.send(detailUserArray.concat(results));
     }
 
