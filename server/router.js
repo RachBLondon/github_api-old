@@ -39,12 +39,12 @@ module.exports = function(app){
       const getUrl = 'https://api.github.com/users/'+ userObj.login +'?access_token='+ process.env.Github_AT;
       axios.get(getUrl)
         .then(response =>{
-          callback(null, detailUserArray.push(response.data))
+          callback(null,response.data);
         });
      }
 
-    const done = function(error, result) {
-      testRes.send(detailUserArray)
+    const done = function(error, results) {
+        testRes.send(detailUserArray.concat(results));
     }
 
     app.get('/github/pagination', function(req, res){
@@ -67,7 +67,7 @@ module.exports = function(app){
       axios.get('https://api.github.com/search/users?q=+language:'+language+'+location:'+location)
         .then(response =>{
           pagingationURLs(response)
-          async.map(response.data.items, apiDeets, done );
+          async.map(response.data.items, apiDeets, done);
         });
     });
 

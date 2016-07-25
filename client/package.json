@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "autoprefixer": "postcss --use autoprefixer --autoprefixer.browsers \"last 2 versions\" -r src/client/style/*.css",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
+    "test:runner": "mocha --recursive test/.setup.js test/*",
+    "test": "mocha --recursive test/.setup.js test/*",
     "test:watch": "npm run test -- --watch"
   },
   "author": "",
@@ -19,10 +20,13 @@
     "babel-preset-react": "^6.1.18",
     "chai": "^3.5.0",
     "chai-jquery": "^2.0.0",
+    "es6-promise": "^3.2.1",
     "jquery": "^2.2.1",
     "jsdom": "^8.1.0",
-    "mocha": "^2.4.5",
+    "mocha": "^2.5.3",
+    "nock": "^8.0.0",
     "react-addons-test-utils": "^0.14.7",
+    "tap": "^6.2.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
@@ -30,6 +34,7 @@
     "autoprefixer": "^6.3.6",
     "axios": "^0.11.0",
     "babel-preset-stage-1": "^6.1.18",
+    "enzyme": "^2.4.1",
     "lodash": "^3.10.1",
     "postcss-cli": "^2.5.2",
     "react": "^0.14.3",
