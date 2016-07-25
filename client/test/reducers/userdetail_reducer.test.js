@@ -14,7 +14,7 @@ describe('userdetail_reducer', function () {
     })
 
     it("returns state by default", () => {})
-    const action = { type: actions.SOME_ACTION }
-    const state = reducer(null, action)
-    expect(state).isNull
+        const action = { type: actions.SOME_ACTION }
+        const state = reducer(null, action)
+        expect(state).isNull
 })
